@@ -29,7 +29,17 @@ module ShowFor
         else
           value
       end
-
+      
+      # If a block is given and it isn't an Array or Hash, we can safely call the block
+      # and pass content, allowing the user to customize the output
+      # Example:
+      #
+      #   show_for @user do |f|
+      #     f.attribute(:name){|v| link_to(v, user_path(@user)) }
+      #   end
+      #
+      content = block.call(content) unless [Array, Hash].include?(value.class) || !block_given?
+      
       options[:content_html] = options.except(:content_tag) if apply_options
       wrap_with(:content, content, apply_wrapper_options!(:content, options, sample_value) )
     end
