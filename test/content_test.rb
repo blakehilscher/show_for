@@ -23,4 +23,10 @@ class ContentTest < ActionView::TestCase
       assert_select "div.show_for b.nothing"
     end
   end
+  
+  test "show_for#content given a block should be wrapped in the result" do
+    with_attribute_for( @user, :name, {}, ){|name| "<div class='block'>#{name}</div>".html_safe }
+    assert_select "p.wrapper.user_name div.block"
+  end
+  
 end
