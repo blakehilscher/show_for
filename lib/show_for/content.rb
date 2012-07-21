@@ -38,7 +38,7 @@ module ShowFor
       #     f.attribute(:name){|v| link_to(v, user_path(@user)) }
       #   end
       #
-      content = block.call(content) unless [Array, Hash].include?(value.class) || !block_given?
+      content = block.call(content).html_safe unless [Array, Hash].include?(value.class) || !block_given?
       
       options[:content_html] = options.except(:content_tag) if apply_options
       wrap_with(:content, content, apply_wrapper_options!(:content, options, sample_value) )
